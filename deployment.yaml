@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+spec:
+  replicas: 2  # Number of desired replicas
+  selector:
+    matchLabels:
+      app: pz-react-app
+  template:
+    metadata:
+      labels:
+        app: pz-react-app
+    spec:
+      containers:
+      - name: pz-react-app
+        image: yash5090/pz-react-app:latest
+        ports:
+        - containerPort: 3000
