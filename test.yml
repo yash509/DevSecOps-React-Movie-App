@@ -1,0 +1,10 @@
+
+.icon[data-name$=".yml"],
+.icon[data-name$=".yaml"]{
+	&:before{
+		width: 1em;
+		height: 1em;
+		vertical-align: -10%;
+		background: url("./some-icon.svg");
+		background-size: contain;
+	}
