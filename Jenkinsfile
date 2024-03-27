@@ -15,7 +15,7 @@ pipeline {
         }
         stage('Checkout from Git') {                        
             steps {                                       
-                git branch: 'main', url: 'https://github.com/yash509/DevSecOps-React-Tailwind-App.git'
+                git branch: 'main', url: 'https://github.com/yash509/DevSecOps-React-Movie-App.git'
             }
         }
         stage('Deployments') {
@@ -72,8 +72,8 @@ pipeline {
             steps {
                 //dir('Band Website') {
                     withSonarQubeEnv('sonar-server') {
-                    sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=react-app \
-                    -Dsonar.projectKey=react-app'''
+                    sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=react-movie-app \
+                    -Dsonar.projectKey=react-movie-app'''
                     //}
                 }
             }
@@ -109,11 +109,19 @@ pipeline {
                 //}
             }
         }
-        stage('Docker Scout File System') {
+        stage('Docker Scout Image Overview') {
             steps {
                 script{
                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){
                        sh 'docker-scout quickview fs://.'
+                   }
+                }   
+            }
+        }
+        stage('Docker Scout CVES File System Scan') {
+            steps {
+                script{
+                   withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){
                        sh 'docker-scout cves fs://.'
                    }
                 }   
@@ -124,7 +132,7 @@ pipeline {
                 script{
                     //dir('Band Website') {
                         withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){   
-                            sh "docker build -t pz-react-app ." 
+                            sh "docker build -t m-react-app ." 
                             
                         //}
                     }
@@ -136,7 +144,7 @@ pipeline {
                 script{
                     //dir('Band Website') {
                         withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){
-                            sh "docker tag pz-react-app yash5090/pz-react-app:latest " 
+                            sh "docker tag m-react-app yash5090/m-react-app:latest " 
                         //}
                     }
                 }
@@ -144,7 +152,7 @@ pipeline {
         }
         stage('Docker Image Scanning') { 
             steps { 
-                sh "trivy image --format table -o trivy-image-report.html yash5090/pz-react-app:latest" 
+                sh "trivy image --format table -o trivy-image-report.html yash5090/m-react-app:latest" 
             } 
         } 
         stage("Image Push to DockerHub") {
@@ -152,19 +160,19 @@ pipeline {
                 script{
                     //dir('Band Website') {
                         withDockerRegistry(credentialsId: 'docker', toolName: 'docker') {
-                            sh "docker push yash5090/pz-react-app:latest "
+                            sh "docker push yash5090/m-react-app:latest "
                         //}
                     }
                 }
             }
         }
-        stage('Docker Scout Image') {
+        stage('Docker Scout Image Scanning') {
             steps {
                 script{
                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){
-                       sh 'docker-scout quickview yash5090/pz-react-app:latest'
-                       sh 'docker-scout cves yash5090/pz-react-app:latest'
-                       sh 'docker-scout recommendations yash5090/pz-react-app:latest'
+                       sh 'docker-scout quickview yash5090/m-react-app:latest'
+                       sh 'docker-scout cves yash5090/m-react-app:latest'
+                       sh 'docker-scout recommendations yash5090/m-react-app:latest'
                    }
                 }   
             }
@@ -172,7 +180,7 @@ pipeline {
         stage("TRIVY"){
             steps{
                 //dir('Band Website') {
-                    sh "trivy image yash5090/pz-react-app:latest > trivyimage.txt"   
+                    sh "trivy image yash5090/m-react-app:latest > trivyimage.txt"   
                 //}
             }
         }
@@ -204,7 +212,7 @@ pipeline {
         stage('Deploy to container'){
             steps{
                 //dir('BMI Calculator (JS)') {
-                    sh 'docker run -d --name pz-react-app -p 3000:3000 yash5090/pz-react-app:latest' 
+                    sh 'docker run -d --name m-react-app -p 3000:3000 yash5090/m-react-app:latest' 
                 //}
             }
         }
