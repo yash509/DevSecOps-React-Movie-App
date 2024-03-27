@@ -23,5 +23,6 @@ Using React components to structure data into presentational format
 Using CSS to create visually appealing and user friendly application
 
 
-Docker to use to vuild docker image:
+Docker to use to vuild docker image:-
+
 docker build --build-arg OMDB_V3_API_KEY=<your-api-key> -t movie-app .
