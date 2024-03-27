@@ -4,7 +4,7 @@ metadata:
   name: app-service
 spec:
   selector:
-    app: pizza-react-app
+    app: m-react-app
   ports:
     - protocol: TCP
       port: 3000
