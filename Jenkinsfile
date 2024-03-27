@@ -231,6 +231,7 @@ pipeline {
          stage('Verify the Kubernetes Deployments') { 
             steps { 
                 withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'k8s', namespace: '', restrictKubeConfigAccess: false, serverUrl: '') { 
+                    sh "kubectl get all "
                     sh "kubectl get pods " 
                     sh "kubectl get svc " 
                 } 
