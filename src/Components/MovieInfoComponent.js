@@ -156,8 +156,7 @@ const MovieInfoComponent = (props) => {
 				>
 			)
 				
-		} <
-		/Container>
+		} </Container>
 	)
 }
 
