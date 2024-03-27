@@ -8,14 +8,14 @@ spec:
   replicas: 2 # You can adjust the number of replicas as needed
   selector:
     matchLabels:
-      app: pizza-react-app
+      app: m-react-app
   template:
     metadata:
       labels:
-        app: pizza-react-app
+        app: m-react-app
     spec:
       containers:
-        - name: pizza-react-app
-          image: yash5090/pizza-react-app # Replace with the actual image tag
+        - name: m-react-app
+          image: yash5090/m-react-app # Replace with the actual image tag
           ports:
             - containerPort: 3000 # Replace with the port your Tetris game listens on
